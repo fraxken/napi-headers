@@ -44,5 +44,11 @@ If you want to download headers for a specific version of Node.js, just write:
 $ napihead -n v11.0.0
 ```
 
+### Download a given version of Node-addon-api package
+If you want to download a given version of node-addon-api (for headers), just write:
+```bash
+$ napihead -c 1.6.0
+```
+
 ## Licence
 MIT
