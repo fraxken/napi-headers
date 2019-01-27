@@ -39,10 +39,17 @@ async function downloadNAPIHeader(includeDir, version) {
     await rmfr(headerDir);
 }
 
+/**
+ * @async
+ * @func getOutputDirectory
+ * @param {!String} baseOuput baseOuput
+ * @returns {Promise<String>}
+ */
 async function getOutputDirectory(baseOuput) {
     if (typeof baseOuput === "undefined") {
         baseOuput = resolve(process.cwd(), "include");
         try {
+            // Create /include dir if not exist!
             await mkdir(baseOuput);
         }
         catch (err) {
