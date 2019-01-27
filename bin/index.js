@@ -75,13 +75,14 @@ async function main() {
     console.log(gray(`\n > Output directory: ${yellow(outputDirectory)}`));
 
     if (getNodeAddonAPI) {
-        console.log("\nDownload N-API & node-addon-api Headers...");
+        console.log("\nDownload Node-addon-api package...");
         const tempDirectory = join(outputDirectory, "nodeaddonapi");
         await mkdir(tempDirectory);
 
         // Find and extract node-addon-api package in temporary directory
         const manifest = await libnpm.manifest("node-addon-api");
         const wantedVersion = typeof commander.cpp === "string" ? commander.cpp : manifest.version;
+        console.log(`Node-addon-api version: ${yellow(wantedVersion)}`);
         await libnpm.extract(`node-addon-api@${wantedVersion}`, tempDirectory);
 
         // Copy all files we want
@@ -99,6 +100,7 @@ async function main() {
         console.log(`\nDownload N-API Headers (version ${getNAPIVersion || process.version})`);
         await downloadNAPIHeader(outputDirectory, getNAPIVersion);
     }
+
     console.log(green("Program executed with no errors!\n"));
 }
 main().catch(console.error);
