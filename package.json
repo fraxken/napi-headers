@@ -1,6 +1,6 @@
 {
     "name": "napi-headers",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Dowload Node.js N-API headers",
     "main": "index.js",
     "scripts": {
