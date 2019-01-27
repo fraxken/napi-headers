@@ -15,8 +15,13 @@
         "url": "git+https://github.com/fraxken/napi-headers.git"
     },
     "keywords": [
-        "SlimIO",
-        "monitoring"
+        "node",
+        "nodejs",
+        "n-api",
+        "napi",
+        "header",
+        "cpp",
+        "download"
     ],
     "author": "SlimIO",
     "license": "MIT",
