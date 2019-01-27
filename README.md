@@ -19,7 +19,7 @@ $ npx napi-headers
 
 When installed globally the `napihead` executable will be exposed in your terminal.
 ```bash
-napihead -c -o ./include
+$ napihead -c -o ./include
 ```
 
 <p align="center">
@@ -37,6 +37,12 @@ napihead -c -o ./include
 When `--cpp` is requested, `--napi` is ignored because node-addon-api already include Node.js N-API headers.
 
 > Note: when output is undefined, the include directory will be created automatically !
+
+### Download a given version of Node.js N-API headers
+If you want to download headers for a specific version of Node.js, just write:
+```bash
+$ napihead -n v11.0.0
+```
 
 ## Licence
 MIT
