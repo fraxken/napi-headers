@@ -17,11 +17,13 @@ const { gray, yellow, green } = require("kleur");
  * @func downloadNAPIHeader
  * @desc Download and extract NAPI Headers
  * @param {!String} includeDir include directory absolute path
+ * @param {String} [version=latest] N-API Version
  * @returns {Promise<void>}
  */
-async function downloadNAPIHeader(includeDir) {
+async function downloadNAPIHeader(includeDir, version = "latest") {
     const tarFile = await downloadNodeFile(File.Headers, {
-        dest: includeDir
+        dest: includeDir,
+        version
     });
     const headerDir = await extract(tarFile);
     await unlink(tarFile);
@@ -37,6 +39,20 @@ async function downloadNAPIHeader(includeDir) {
     await rmfr(headerDir);
 }
 
+async function getOutputDirectory(baseOuput) {
+    if (typeof baseOuput === "undefined") {
+        baseOuput = resolve(process.cwd(), "include");
+        try {
+            await mkdir(baseOuput);
+        }
+        catch (err) {
+            // Ignore
+        }
+    }
+
+    return baseOuput;
+}
+
 /**
  * @async
  * @func main
@@ -46,23 +62,17 @@ async function main() {
     commander
         .version("0.1.0")
         .option("-o, --output <directory>", "output directory")
-        .option("-n, --napi", "include N-API headers")
+        .option("-n, --napi [version]", "include N-API headers")
         .option("-c, --cpp", "include C++ node-addon-api headers")
         .parse(process.argv);
 
-    const getNAPI = Boolean(commander.napi);
+    // Retrieve argv
+    const getNAPI = typeof commander.napi === "string" ? true : Boolean(commander.napi);
+    const getNAPIVersion = typeof commander.napi === "string" ? commander.napi : "latest";
     const getNodeAddonAPI = Boolean(commander.cpp);
-    let outputDirectory = commander.output;
-    if (typeof outputDirectory === "undefined") {
-        outputDirectory = resolve(process.cwd(), "include");
-        try {
-            await mkdir(outputDirectory);
-        }
-        catch (err) {
-            // Ignore
-        }
-    }
-    console.log(gray(`\n > Output directory configured as: ${yellow(outputDirectory)}`));
+
+    const outputDirectory = await getOutputDirectory(commander.output);
+    console.log(gray(`\n > Output directory: ${yellow(outputDirectory)}`));
 
     if (getNodeAddonAPI) {
         console.log("\nDownload N-API & node-addon-api Headers...");
@@ -81,7 +91,7 @@ async function main() {
     }
     else if (getNAPI) {
         console.log("\nDownload N-API Headers...");
-        await downloadNAPIHeader(outputDirectory);
+        await downloadNAPIHeader(outputDirectory, getNAPIVersion);
     }
     console.log(green("Program executed with no errors!\n"));
 }
