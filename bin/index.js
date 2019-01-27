@@ -46,8 +46,8 @@ async function main() {
     commander
         .version("0.1.0")
         .option("-o, --output <directory>", "output directory")
-        .option('-n, --napi', "include N-API headers")
-        .option('-c, --cpp', "include C++ node-addon-api headers")
+        .option("-n, --napi", "include N-API headers")
+        .option("-c, --cpp", "include C++ node-addon-api headers")
         .parse(process.argv);
 
     const getNAPI = Boolean(commander.napi);
@@ -80,9 +80,9 @@ async function main() {
         await rmfr(dir);
     }
     else if (getNAPI) {
-        console.log("\nDownload N-API Headers...")
+        console.log("\nDownload N-API Headers...");
         await downloadNAPIHeader(outputDirectory);
     }
-    console.log(green("Program executed with no errors!\n"))
+    console.log(green("Program executed with no errors!\n"));
 }
 main().catch(console.error);
