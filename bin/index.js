@@ -76,21 +76,24 @@ async function main() {
 
     if (getNodeAddonAPI) {
         console.log("\nDownload N-API & node-addon-api Headers...");
-        const dir = join(outputDirectory, "nodeaddonapi");
-        await mkdir(dir);
+        const tempDirectory = join(outputDirectory, "nodeaddonapi");
+        await mkdir(tempDirectory);
 
+        // Find and extract node-addon-api package in temporary directory
         const manifest = await libnpm.manifest("node-addon-api");
         const wantedVersion = typeof commander.cpp === "string" ? commander.cpp : manifest.version;
-        await libnpm.extract(`node-addon-api@${wantedVersion}`, dir);
-        const src = join(dir, "src");
+        await libnpm.extract(`node-addon-api@${wantedVersion}`, tempDirectory);
 
+        // Copy all files we want
         await Promise.all([
-            copyFile(join(dir, "napi.h"), join(outputDirectory, "napi.h")),
-            copyFile(join(dir, "napi-inl.h"), join(outputDirectory, "napi-inl.h")),
-            copyFile(join(src, "node_api.h"), join(outputDirectory, "node_api.h")),
-            copyFile(join(src, "node_api_types.h"), join(outputDirectory, "node_api_types.h"))
+            copyFile(join(tempDirectory, "napi.h"), join(outputDirectory, "napi.h")),
+            copyFile(join(tempDirectory, "napi-inl.h"), join(outputDirectory, "napi-inl.h")),
+            copyFile(join(tempDirectory, "src", "node_api.h"), join(outputDirectory, "node_api.h")),
+            copyFile(join(tempDirectory, "src", "node_api_types.h"), join(outputDirectory, "node_api_types.h"))
         ]);
-        await rmfr(dir);
+
+        // Remove temporary dir
+        await rmfr(tempDirectory);
     }
     else if (getNAPI) {
         console.log(`\nDownload N-API Headers (version ${getNAPIVersion || process.version})`);
