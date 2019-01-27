@@ -17,10 +17,10 @@ const { gray, yellow, green } = require("kleur");
  * @func downloadNAPIHeader
  * @desc Download and extract NAPI Headers
  * @param {!String} includeDir include directory absolute path
- * @param {String} [version=latest] N-API Version
+ * @param {String} [version] N-API Version
  * @returns {Promise<void>}
  */
-async function downloadNAPIHeader(includeDir, version = "latest") {
+async function downloadNAPIHeader(includeDir, version) {
     const tarFile = await downloadNodeFile(File.Headers, {
         dest: includeDir,
         version
@@ -68,7 +68,7 @@ async function main() {
 
     // Retrieve argv
     const getNAPI = typeof commander.napi === "string" ? true : Boolean(commander.napi);
-    const getNAPIVersion = typeof commander.napi === "string" ? commander.napi : "latest";
+    const getNAPIVersion = typeof commander.napi === "string" ? commander.napi : void 0;
     const getNodeAddonAPI = typeof commander.cpp === "string" ? true : Boolean(commander.cpp);
 
     const outputDirectory = await getOutputDirectory(commander.output);
