@@ -2,7 +2,7 @@
     "name": "napi-headers",
     "version": "0.2.1",
     "description": "Dowload Node.js N-API headers",
-    "main": "index.js",
+    "main": "./bin/index.js",
     "scripts": {
         "prepublishOnly": "pkg-ok",
         "test": "ava --verbose",
