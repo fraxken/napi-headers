@@ -1,7 +1,7 @@
 # napi-headers
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/SlimIO/is/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/fraxken/napi-headers/commit-activity)
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
-![V1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![V0.2.0](https://img.shields.io/badge/version-0.2.0-blue.svg)
 
 npm CLI to download Node.js [N-API](https://nodejs.org/api/n-api.html) headers and/or [node-addon-api](https://github.com/nodejs/node-addon-api) headers (for C++).
 
