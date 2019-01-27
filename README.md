@@ -3,7 +3,7 @@
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 ![V1.0](https://img.shields.io/badge/version-0.1.0-blue.svg)
 
-Dowload Node.js N-API headers
+npm CLI to download Node.js [N-API](https://nodejs.org/api/n-api.html) headers and/or [node-addon-api](https://github.com/nodejs/node-addon-api) headers (for C++).
 
 ## Getting Started
 
@@ -22,8 +22,21 @@ When installed globally the `napihead` executable will be exposed in your termin
 napihead -c -o ./include
 ```
 
-> The default output directory is process.cwd()/include
-
 <p align="center">
     <img src="https://i.imgur.com/iTLZlpR.png">
 </p>
+
+## Arguments
+
+| argument | shortcut | description | default value |
+| --- | --- | --- | --- |
+| --napi | -n | Download Node.js N-API Headers | false |
+| --cpp | -c | Download node-addon-api Headers | false |
+| --output | -o | Ouput directory for headers | `process.cwd()/include` |
+
+When `--cpp` is requested, `--napi` is ignored because node-addon-api already include Node.js N-API headers.
+
+> Note: when output is undefined, the include directory will be created automatically !
+
+## Licence
+MIT
