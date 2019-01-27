@@ -63,13 +63,13 @@ async function main() {
         .version("0.1.0")
         .option("-o, --output <directory>", "output directory")
         .option("-n, --napi [version]", "include N-API headers")
-        .option("-c, --cpp", "include C++ node-addon-api headers")
+        .option("-c, --cpp [version]", "include C++ node-addon-api headers")
         .parse(process.argv);
 
     // Retrieve argv
     const getNAPI = typeof commander.napi === "string" ? true : Boolean(commander.napi);
     const getNAPIVersion = typeof commander.napi === "string" ? commander.napi : "latest";
-    const getNodeAddonAPI = Boolean(commander.cpp);
+    const getNodeAddonAPI = typeof commander.cpp === "string" ? true : Boolean(commander.cpp);
 
     const outputDirectory = await getOutputDirectory(commander.output);
     console.log(gray(`\n > Output directory: ${yellow(outputDirectory)}`));
@@ -78,7 +78,10 @@ async function main() {
         console.log("\nDownload N-API & node-addon-api Headers...");
         const dir = join(outputDirectory, "nodeaddonapi");
         await mkdir(dir);
-        await libnpm.extract("node-addon-api", dir);
+
+        const manifest = await libnpm.manifest("node-addon-api");
+        const wantedVersion = typeof commander.cpp === "string" ? commander.cpp : manifest.version;
+        await libnpm.extract(`node-addon-api@${wantedVersion}`, dir);
         const src = join(dir, "src");
 
         await Promise.all([
