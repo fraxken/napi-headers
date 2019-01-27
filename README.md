@@ -23,7 +23,7 @@ $ napihead -c -o ./include
 ```
 
 <p align="center">
-    <img src="https://i.imgur.com/iTLZlpR.png">
+    <img src="https://i.imgur.com/0HgP0Gv.png">
 </p>
 
 ## Arguments
