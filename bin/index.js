@@ -93,7 +93,7 @@ async function main() {
         await rmfr(dir);
     }
     else if (getNAPI) {
-        console.log("\nDownload N-API Headers...");
+        console.log(`\nDownload N-API Headers (version ${getNAPIVersion || process.version})`);
         await downloadNAPIHeader(outputDirectory, getNAPIVersion);
     }
     console.log(green("Program executed with no errors!\n"));
