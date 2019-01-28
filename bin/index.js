@@ -2,43 +2,16 @@
 require("make-promises-safe");
 
 // Require Node.js Dependencies
-const { copyFile, readdir, mkdir, unlink } = require("fs").promises;
-const { resolve, join } = require("path");
+const { mkdir } = require("fs").promises;
+const { resolve } = require("path");
 
 // Require Third-party Dependencies
-const rmfr = require("rmfr");
-const { downloadNodeFile, extract, constants: { File } } = require("@slimio/nodejs-downloader");
 const commander = require("commander");
-const libnpm = require("libnpm");
 const { gray, yellow, green } = require("kleur");
 const ora = require("ora");
 
-/**
- * @async
- * @func downloadNAPIHeader
- * @desc Download and extract NAPI Headers
- * @param {!String} includeDir include directory absolute path
- * @param {String} [version] N-API Version
- * @returns {Promise<void>}
- */
-async function downloadNAPIHeader(includeDir, version) {
-    const tarFile = await downloadNodeFile(File.Headers, {
-        dest: includeDir,
-        version
-    });
-    const headerDir = await extract(tarFile);
-    await unlink(tarFile);
-
-    const [nodeVerDir] = await readdir(headerDir);
-    const nodeDir = join(headerDir, nodeVerDir, "include", "node");
-
-    await Promise.all([
-        copyFile(join(nodeDir, "node_api.h"), join(includeDir, "node_api.h")),
-        copyFile(join(nodeDir, "node_api_types.h"), join(includeDir, "node_api_types.h"))
-    ]);
-
-    await rmfr(headerDir);
-}
+// Internal
+const { napi, nodeAddonApi } = require("../index");
 
 /**
  * @async
@@ -49,13 +22,8 @@ async function downloadNAPIHeader(includeDir, version) {
 async function getOutputDirectory(baseOuput) {
     if (typeof baseOuput === "undefined") {
         baseOuput = resolve(process.cwd(), "include");
-        try {
-            // Create /include dir if not exist!
-            await mkdir(baseOuput);
-        }
-        catch (err) {
-            // Ignore
-        }
+        // eslint-disable-next-line
+        await mkdir(baseOuput).catch((err) => void 0);
     }
 
     return baseOuput;
@@ -76,38 +44,21 @@ async function main() {
 
     // Retrieve argv
     const getNAPI = typeof commander.napi === "string" ? true : Boolean(commander.napi);
-    const getNAPIVersion = typeof commander.napi === "string" ? commander.napi : void 0;
     const getNodeAddonAPI = typeof commander.cpp === "string" ? true : Boolean(commander.cpp);
-
     const outputDirectory = await getOutputDirectory(commander.output);
     console.log(gray(`\n > Output directory: ${yellow(outputDirectory)}\n`));
 
     if (getNodeAddonAPI) {
         const spin = ora("\nDownload Node-addon-api package...").start();
-        const tempDirectory = join(outputDirectory, "nodeaddonapi");
-        await mkdir(tempDirectory);
-
-        // Find and extract node-addon-api package in temporary directory
-        const manifest = await libnpm.manifest("node-addon-api");
-        const wantedVersion = typeof commander.cpp === "string" ? commander.cpp : manifest.version;
-        spin.text = `Node-addon-api version: ${yellow(wantedVersion)}`;
-        await libnpm.extract(`node-addon-api@${wantedVersion}`, tempDirectory);
-
-        // Copy all files we want
-        await Promise.all([
-            copyFile(join(tempDirectory, "napi.h"), join(outputDirectory, "napi.h")),
-            copyFile(join(tempDirectory, "napi-inl.h"), join(outputDirectory, "napi-inl.h")),
-            copyFile(join(tempDirectory, "src", "node_api.h"), join(outputDirectory, "node_api.h")),
-            copyFile(join(tempDirectory, "src", "node_api_types.h"), join(outputDirectory, "node_api_types.h"))
-        ]);
-
-        // Remove temporary dir
-        await rmfr(tempDirectory);
+        const wantedVersion = typeof commander.cpp === "string" ? commander.cpp : void 0;
+        await nodeAddonApi(outputDirectory, wantedVersion);
         spin.succeed();
     }
     else if (getNAPI) {
-        const spin = ora(`Download N-API Headers (version ${getNAPIVersion || process.version})`).start();
-        await downloadNAPIHeader(outputDirectory, getNAPIVersion);
+        const wantedVersion = typeof commander.napi === "string" ? commander.napi : void 0;
+
+        const spin = ora(`Download N-API Headers (version ${wantedVersion || process.version})`).start();
+        await napi(outputDirectory, wantedVersion);
         spin.succeed();
     }
 
