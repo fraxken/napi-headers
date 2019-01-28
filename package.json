@@ -70,6 +70,7 @@
     },
     "preferGlobal": true,
     "bin": {
-        "napihead": "./bin/index.js"
+        "napihead": "./bin/index.js",
+        "nodehead": "./bin/index.js"
     }
 }
