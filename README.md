@@ -17,7 +17,7 @@ $ npx napi-headers
 
 ## Usage example
 
-When installed globally the `napihead` executable will be exposed in your terminal.
+When installed globally the `napihead` (or `nodehead`) executable will be exposed in your terminal.
 ```bash
 $ napihead -c -o ./include
 ```

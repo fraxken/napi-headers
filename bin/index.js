@@ -11,6 +11,7 @@ const { downloadNodeFile, extract, constants: { File } } = require("@slimio/node
 const commander = require("commander");
 const libnpm = require("libnpm");
 const { gray, yellow, green } = require("kleur");
+const ora = require("ora");
 
 /**
  * @async
@@ -79,17 +80,17 @@ async function main() {
     const getNodeAddonAPI = typeof commander.cpp === "string" ? true : Boolean(commander.cpp);
 
     const outputDirectory = await getOutputDirectory(commander.output);
-    console.log(gray(`\n > Output directory: ${yellow(outputDirectory)}`));
+    console.log(gray(`\n > Output directory: ${yellow(outputDirectory)}\n`));
 
     if (getNodeAddonAPI) {
-        console.log("\nDownload Node-addon-api package...");
+        const spin = ora("\nDownload Node-addon-api package...").start();
         const tempDirectory = join(outputDirectory, "nodeaddonapi");
         await mkdir(tempDirectory);
 
         // Find and extract node-addon-api package in temporary directory
         const manifest = await libnpm.manifest("node-addon-api");
         const wantedVersion = typeof commander.cpp === "string" ? commander.cpp : manifest.version;
-        console.log(`Node-addon-api version: ${yellow(wantedVersion)}`);
+        spin.text = `Node-addon-api version: ${yellow(wantedVersion)}`;
         await libnpm.extract(`node-addon-api@${wantedVersion}`, tempDirectory);
 
         // Copy all files we want
@@ -102,12 +103,14 @@ async function main() {
 
         // Remove temporary dir
         await rmfr(tempDirectory);
+        spin.succeed();
     }
     else if (getNAPI) {
-        console.log(`\nDownload N-API Headers (version ${getNAPIVersion || process.version})`);
+        const spin = ora(`Download N-API Headers (version ${getNAPIVersion || process.version})`).start();
         await downloadNAPIHeader(outputDirectory, getNAPIVersion);
+        spin.succeed();
     }
 
-    console.log(green("Program executed with no errors!\n"));
+    console.log(green("\nProgram executed with no errors!\n"));
 }
 main().catch(console.error);
