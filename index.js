@@ -1,5 +1,5 @@
 // Node.js Dependencies
-const { copyFile, readdir, mkdir, unlink } = require("fs").promises;
+const { copyFile, readdir, mkdir, unlink, access } = require("fs").promises;
 const { join } = require("path");
 
 // Third-party Dependencies
@@ -27,6 +27,17 @@ async function napi(dest, version) {
         copyFile(join(nodeDir, "node_api.h"), join(dest, "node_api.h")),
         copyFile(join(nodeDir, "node_api_types.h"), join(dest, "node_api_types.h"))
     ]);
+
+    try {
+        await access(join(nodeDir, "js_native_api.h"));
+        await Promise.all([
+            copyFile(join(nodeDir, "js_native_api.h"), join(dest, "js_native_api.h")),
+            copyFile(join(nodeDir, "js_native_api_types.h"), join(dest, "js_native_api_types.h"))
+        ]);
+    }
+    catch (err) {
+        // Do nothing
+    }
 
     await rmfr(headerDir);
 }
