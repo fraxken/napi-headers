@@ -17,9 +17,9 @@ $ npx napi-headers
 
 ## Usage example
 
-When installed globally the `napihead` (or `nodehead`) executable will be exposed in your terminal.
+When installed globally the `nodehead` (or `napihead`) executable will be exposed in your terminal.
 ```bash
-$ napihead -c -o ./include
+$ nodehead -c -o ./include
 ```
 
 <p align="center">
@@ -41,13 +41,13 @@ When `--cpp` is requested, `--napi` is ignored because node-addon-api already in
 ### Download a given version of Node.js N-API headers
 If you want to download headers for a specific version of Node.js, just write:
 ```bash
-$ napihead -n v11.0.0
+$ nodehead -n v11.0.0
 ```
 
 ### Download a given version of Node-addon-api package
 If you want to download a given version of node-addon-api (for headers), just write:
 ```bash
-$ napihead -c 1.6.0
+$ nodehead -c 1.6.0
 ```
 
 ## Licence
