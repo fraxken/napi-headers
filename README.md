@@ -27,21 +27,18 @@ $ nodehead -c -o ./include
 </p>
 
 ## API
-Node-headers can be used as an API as well.
+napi-headers can be used as an API as well.
 
 ```js
 const headers = require("napi-headers");
 
-async function main() {
-    await headers.napi(process.cwd());
-}
-main().catch(console.error)
+headers.napi(process.cwd()).catch(console.error)
 ```
 
 ### napi(dest: string, version?: string): void
 Download N-API headers at the given destination. Version must be a valid Node.js release version (take a look [here](https://nodejs.org/download/release/)).
 
-## nodeAddonApi(dest: string, version?: string): void
+### nodeAddonApi(dest: string, version?: string): void
 Download Node-addon-api headers at the given destination. Version must be a valid node-addon-api package version.
 
 ## Arguments
