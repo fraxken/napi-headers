@@ -30,7 +30,7 @@
     },
     "homepage": "https://github.com/fraxken/napi-headers#readme",
     "dependencies": {
-        "@slimio/nodejs-downloader": "^0.2.0",
+        "@slimio/nodejs-downloader": "^0.4.0",
         "commander": "^2.19.0",
         "kleur": "^3.0.2",
         "libnpm": "^2.0.1",
