@@ -1,7 +1,10 @@
 # napi-headers
+![ver](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/fraxken/napi-headers/master/package.json&query=$.version&label=Version)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/fraxken/napi-headers/commit-activity)
 ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
-![V0.5.0](https://img.shields.io/badge/version-0.5.0-blue.svg)
+![dep](https://img.shields.io/david/fraxken/napi-headers.svg)
+![size](https://img.shields.io/github/repo-size/fraxken/napi-headers.svg)
+[![Known Vulnerabilities](https://snyk.io//test/github/fraxken/napi-headers/badge.svg?targetFile=package.json)](https://snyk.io//test/github/fraxken/napi-headers?targetFile=package.json)
 
 npm CLI to download Node.js [N-API](https://nodejs.org/api/n-api.html) headers and/or [node-addon-api](https://github.com/nodejs/node-addon-api) headers (for C++).
 
@@ -65,5 +68,5 @@ If you want to download a given version of node-addon-api (for headers), just wr
 $ nodehead -c 1.6.0
 ```
 
-## Licence
+## License
 MIT
