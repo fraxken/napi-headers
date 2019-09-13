@@ -33,7 +33,7 @@
         "@slimio/nodejs-downloader": "^0.4.0",
         "commander": "^3.0.1",
         "kleur": "^3.0.3",
-        "libnpm": "^2.0.1",
+        "libnpm": "^3.0.1",
         "make-promises-safe": "^5.0.0",
         "ora": "^3.4.0",
         "rmfr": "^2.0.0"
