@@ -1,77 +1,81 @@
 {
-    "name": "napi-headers",
-    "version": "0.5.0",
-    "description": "Dowload Node.js N-API headers",
-    "main": "./bin/index.js",
-    "scripts": {
-        "prepublishOnly": "pkg-ok",
-        "test": "ava --verbose",
-        "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
-        "coverage": "nyc ava",
-        "report": "nyc report --reporter=html"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/fraxken/napi-headers.git"
-    },
-    "keywords": [
-        "node",
-        "nodejs",
-        "n-api",
-        "napi",
-        "header",
-        "cpp",
-        "download"
-    ],
-    "author": "SlimIO",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/fraxken/napi-headers/issues"
-    },
-    "homepage": "https://github.com/fraxken/napi-headers#readme",
-    "dependencies": {
-        "@slimio/nodejs-downloader": "^0.4.0",
-        "commander": "^3.0.1",
-        "kleur": "^3.0.3",
-        "libnpm": "^3.0.1",
-        "make-promises-safe": "^5.0.0",
-        "ora": "^3.4.0",
-        "rmfr": "^2.0.0"
-    },
-    "devDependencies": {
-        "@commitlint/cli": "^8.1.0",
-        "@commitlint/config-conventional": "^8.1.0",
-        "@escommunity/minami": "^1.0.0",
-        "@slimio/eslint-config": "^3.0.3",
-        "@types/node": "^12.7.5",
-        "ava": "^2.3.0",
-        "cross-env": "^5.2.1",
-        "eslint": "^6.3.0",
-        "husky": "^3.0.5",
-        "jsdoc": "^3.6.3",
-        "nyc": "^14.1.1",
-        "pkg-ok": "^2.3.1"
-    },
-    "engines": {
-        "node": ">=10"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "cross-env npm test",
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-        }
-    },
-    "nyc": {
-        "check-coverage": true,
-        "per-file": false,
-        "lines": 98,
-        "statements": 98,
-        "functions": 98,
-        "branches": 90
-    },
-    "preferGlobal": true,
-    "bin": {
-        "napihead": "./bin/index.js",
-        "nodehead": "./bin/index.js"
+  "name": "napi-headers",
+  "version": "0.5.0",
+  "description": "Dowload Node.js N-API headers",
+  "main": "./bin/index.js",
+  "scripts": {
+    "prepublishOnly": "pkg-ok",
+    "test": "ava --verbose",
+    "doc": "jsdoc -c ./jsdoc.json -r -R ./README.md -P ./package.json --verbose",
+    "coverage": "nyc ava",
+    "report": "nyc report --reporter=html",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fraxken/napi-headers.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "n-api",
+    "napi",
+    "header",
+    "cpp",
+    "download"
+  ],
+  "author": "SlimIO",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fraxken/napi-headers/issues"
+  },
+  "homepage": "https://github.com/fraxken/napi-headers#readme",
+  "dependencies": {
+    "@slimio/nodejs-downloader": "^0.4.0",
+    "commander": "^3.0.1",
+    "kleur": "^3.0.3",
+    "libnpm": "^3.0.1",
+    "make-promises-safe": "^5.0.0",
+    "ora": "^3.4.0",
+    "rmfr": "^2.0.0",
+    "snyk": "^1.230.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@escommunity/minami": "^1.0.0",
+    "@slimio/eslint-config": "^3.0.3",
+    "@types/node": "^12.7.5",
+    "ava": "^2.3.0",
+    "cross-env": "^5.2.1",
+    "eslint": "^6.3.0",
+    "husky": "^3.0.5",
+    "jsdoc": "^3.6.3",
+    "nyc": "^14.1.1",
+    "pkg-ok": "^2.3.1"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "cross-env npm test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": false,
+    "lines": 98,
+    "statements": 98,
+    "functions": 98,
+    "branches": 90
+  },
+  "preferGlobal": true,
+  "bin": {
+    "napihead": "./bin/index.js",
+    "nodehead": "./bin/index.js"
+  },
+  "snyk": true
 }
