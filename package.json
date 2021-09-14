@@ -35,7 +35,7 @@
         "kleur": "^3.0.3",
         "libnpm": "^3.0.1",
         "make-promises-safe": "^5.0.0",
-        "ora": "^3.4.0",
+        "ora": "^6.0.0",
         "rmfr": "^2.0.0"
     },
     "devDependencies": {
